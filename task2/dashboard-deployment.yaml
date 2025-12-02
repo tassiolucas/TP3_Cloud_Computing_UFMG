@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tp3-dashboard
+  labels:
+    app: tp3-dashboard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tp3-dashboard
+  template:
+    metadata:
+      labels:
+        app: tp3-dashboard
+    spec:
+      containers:
+      - name: dashboard
+        # IMPORTANTE: Substituir pela sua imagem Docker
+        # Exemplo: seu-dockerhub/tp3-dashboard:latest
+        image: seu-usuario/tp3-dashboard:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8501
+          name: http
+          protocol: TCP
+        env:
+        # Configuração Redis
+        - name: REDIS_HOST
+          value: "192.168.121.171"
+        - name: REDIS_PORT
+          value: "6379"
+        # ID do Estudante: 2025720437
+        - name: REDIS_OUTPUT_KEY
+          value: "2025720437-proj3-output"
+        # Intervalo de refresh (segundos)
+        - name: REFRESH_INTERVAL
+          value: "5"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+        livenessProbe:
+          httpGet:
+            path: /_stcore/health
+            port: 8501
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /_stcore/health
+            port: 8501
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+

@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: tp3-dashboard
+  labels:
+    app: tp3-dashboard
+spec:
+  type: NodePort
+  selector:
+    app: tp3-dashboard
+  ports:
+  - name: http
+    protocol: TCP
+    port: 8501          # Porta interna do cluster
+    targetPort: 8501    # Porta do container
+    # IMPORTANTE: Calcular nodePort conforme especificação do TP
+    # nodePort = porta do TP2 (DevOps) + 100
+    # Exemplo: se TP2 usou porta 30100, use 30200 aqui
+    # nodePort deve estar entre 30000-32767
+    nodePort: 30150     # AJUSTAR CONFORME SEU CASO!
+

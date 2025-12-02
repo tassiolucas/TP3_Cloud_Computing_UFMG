@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: outputkey
+data:
+  # ID do Estudante: 2025720437
+  REDIS_OUTPUT_KEY: "2025720437-proj3-output"
+

@@ -1,0 +1,8 @@
+# Dependências do Runtime Serverless - Task 3
+
+# Redis client
+redis>=4.0.0
+
+# HTTP requests para download de ZIPs
+requests>=2.28.0
+

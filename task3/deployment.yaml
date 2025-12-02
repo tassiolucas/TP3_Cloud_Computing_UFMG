@@ -1,0 +1,110 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: serverless-runtime-custom
+  labels:
+    app: serverless-runtime
+    version: custom
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: serverless-runtime
+  template:
+    metadata:
+      labels:
+        app: serverless-runtime
+    spec:
+      containers:
+      - name: runtime
+        # IMPORTANTE: Substituir por sua imagem Docker!
+        image: seu-usuario/tp3-runtime:v1
+        imagePullPolicy: Always
+        
+        env:
+        # Configurações Redis (IP correto para acesso de dentro do container)
+        - name: REDIS_HOST
+          value: "192.168.121.171"
+        
+        - name: REDIS_PORT
+          value: "6379"
+        
+        # Chave de entrada (NOVA FUNCIONALIDADE)
+        - name: REDIS_INPUT_KEY
+          valueFrom:
+            configMapKeyRef:
+              name: runtime-config
+              key: REDIS_INPUT_KEY
+              optional: true
+        
+        # Chave de saída (original)
+        - name: REDIS_OUTPUT_KEY
+          valueFrom:
+            configMapKeyRef:
+              name: outputkey
+              key: REDIS_OUTPUT_KEY
+        
+        # Período de monitoramento (NOVA FUNCIONALIDADE)
+        - name: MONITORING_PERIOD
+          valueFrom:
+            configMapKeyRef:
+              name: runtime-config
+              key: MONITORING_PERIOD
+              optional: true
+        
+        # Handler function (NOVA FUNCIONALIDADE)
+        - name: HANDLER_FUNCTION
+          valueFrom:
+            configMapKeyRef:
+              name: runtime-config
+              key: HANDLER_FUNCTION
+              optional: true
+        
+        # ZIP URL (NOVA FUNCIONALIDADE)
+        - name: ZIP_URL
+          valueFrom:
+            configMapKeyRef:
+              name: runtime-config
+              key: ZIP_URL
+              optional: true
+        
+        # Path do pyfile
+        - name: PYFILE_PATH
+          value: "/app/pyfile/pyfile"
+        
+        # Volume mounts
+        volumeMounts:
+        - name: pyfile
+          mountPath: /app/pyfile
+          readOnly: true
+        
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+      
+      volumes:
+      - name: pyfile
+        configMap:
+          name: pyfile
+          optional: true
+      
+      restartPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: serverless-runtime-custom
+spec:
+  selector:
+    app: serverless-runtime
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+  type: ClusterIP
+

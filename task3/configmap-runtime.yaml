@@ -1,0 +1,42 @@
+---
+# ConfigMap com configurações adicionais do runtime customizado
+# Este ConfigMap contém as NOVAS funcionalidades implementadas na Task 3
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: runtime-config
+data:
+  # Chave Redis de entrada (padrão: metrics)
+  # Permite monitorar uma chave diferente
+  REDIS_INPUT_KEY: "metrics"
+  
+  # Período de monitoramento em segundos (padrão: 5)
+  # Permite ajustar frequência de polling
+  MONITORING_PERIOD: "5"
+  
+  # Função handler a ser chamada (padrão: handler_module.handler)
+  # Formato: nome_modulo.nome_funcao
+  # Permite especificar qual função é o entry point
+  HANDLER_FUNCTION: "handler_module.handler"
+  
+  # URL do ZIP com código da função (opcional)
+  # Se definido, o runtime baixará e extrairá o ZIP
+  # Caso contrário, usará o pyfile do ConfigMap
+  # Exemplo: "https://exemplo.com/function.zip"
+  # ZIP_URL: ""
+
+---
+# Exemplo de ConfigMap com ZIP URL
+# Descomente para testar funcionalidade de ZIP
+
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+#   name: runtime-config
+# data:
+#   REDIS_INPUT_KEY: "metrics"
+#   MONITORING_PERIOD: "10"
+#   HANDLER_FUNCTION: "my_complex_module.process_data"
+#   ZIP_URL: "https://github.com/seu-usuario/seu-repo/archive/refs/heads/main.zip"
+
