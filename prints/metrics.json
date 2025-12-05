@@ -1,0 +1,14 @@
+{
+    "percent-network-egress": 0,
+    "percent-memory-cache": 70.52,
+    "avg-util-cpu0-60sec": 72.92,
+    "avg-util-cpu1-60sec": 13.07,
+    "avg-util-cpu2-60sec": 13.01,
+    "avg-util-cpu3-60sec": 13.05,
+    "avg-util-cpu4-60sec": 99.93,
+    "avg-util-cpu5-60sec": 12.89,
+    "avg-util-cpu6-60sec": 13.04,
+    "avg-util-cpu7-60sec": 12.55,
+    "timestamp": "2025-12-04 22:23:48.287939",
+    "num_cpus_monitored": 8
+  }

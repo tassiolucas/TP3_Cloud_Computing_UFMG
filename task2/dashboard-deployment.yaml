@@ -16,9 +16,7 @@ spec:
     spec:
       containers:
       - name: dashboard
-        # IMPORTANTE: Substituir pela sua imagem Docker
-        # Exemplo: seu-dockerhub/tp3-dashboard:latest
-        image: seu-usuario/tp3-dashboard:latest
+        image: tassiolucas/tp3-dashboard:v1
         imagePullPolicy: Always
         ports:
         - containerPort: 8501

@@ -84,9 +84,9 @@ fi
 # Push da imagem
 echo
 echo -e "${YELLOW}📤 Fazendo push da imagem...${NC}"
-docker push "$FULL_IMAGE"
-
-if [ $? -eq 0 ]; then
+        docker push "$FULL_IMAGE"
+        
+        if [ $? -eq 0 ]; then
     echo -e "${GREEN}✅ Push concluído com sucesso!${NC}"
 else
     echo -e "${RED}❌ Erro no push!${NC}"

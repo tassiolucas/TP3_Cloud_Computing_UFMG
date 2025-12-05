@@ -17,5 +17,4 @@ spec:
     # nodePort = porta do TP2 (DevOps) + 100
     # Exemplo: se TP2 usou porta 30100, use 30200 aqui
     # nodePort deve estar entre 30000-32767
-    nodePort: 30150     # AJUSTAR CONFORME SEU CASO!
-
+    nodePort: 30600     # AJUSTAR CONFORME SEU CASO!
